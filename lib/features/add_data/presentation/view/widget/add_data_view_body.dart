@@ -7,6 +7,7 @@ import 'package:furni_hunt_dashboard/features/add_data/presentation/view/widget/
 import 'package:furni_hunt_dashboard/features/add_data/presentation/view/widget/custom_button.dart';
 import 'package:furni_hunt_dashboard/features/add_data/presentation/view/widget/images_validator.dart';
 import 'package:furni_hunt_dashboard/features/add_data/presentation/view/widget/over_app_loading_indicator.dart';
+
 class AddDataViewBody extends StatefulWidget {
   const AddDataViewBody({super.key});
 
@@ -22,6 +23,7 @@ class _AddDataViewBodyState extends State<AddDataViewBody> {
   final TextEditingController _discountController = TextEditingController();
   final TextEditingController _quantityController = TextEditingController();
   final TextEditingController _categoryController = TextEditingController();
+  String? category;
   void clearFields() {
     _nameController.clear();
     _descriptionController.clear();
@@ -49,9 +51,7 @@ class _AddDataViewBodyState extends State<AddDataViewBody> {
                 quantityController: _quantityController,
                 categoryController: _categoryController,
               )),
-              const SliverToBoxAdapter(
-                child: ImagesValidator()
-              ),
+              const SliverToBoxAdapter(child: ImagesValidator()),
               SliverFillRemaining(
                 hasScrollBody: false,
                 child: Align(
@@ -73,10 +73,10 @@ class _AddDataViewBodyState extends State<AddDataViewBody> {
                                 .millisecondsSinceEpoch
                                 .toString(),
                             productPrice: _priceController.text,
-                            productCategory: "furniture",
+                            productCategory: _categoryController.text,
                             productDescription: _descriptionController.text,
                             productImage: productImage,
-                            productQuantity: "3",
+                            productQuantity: _quantityController.text,
                             createdAt: Timestamp.now());
                         BlocProvider.of<AddProductCubit>(context)
                             .addProduct(productModel: product);
